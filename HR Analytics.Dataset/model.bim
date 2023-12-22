@@ -55,6 +55,10 @@
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
+              },
+              {
+                "name": "__PBI_SemanticLinks",
+                "value": "[{\"LinkTarget\":{\"TableName\":\"HR-Employee-Attrition\",\"TableItemName\":\"Age (groups)\",\"ObjectType\":4},\"LinkType\":\"UsedInGroup\"}]"
               }
             ],
             "dataType": "int64",
@@ -122,6 +126,10 @@
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
+              },
+              {
+                "name": "__PBI_SemanticLinks",
+                "value": "[{\"LinkTarget\":{\"TableName\":\"HR-Employee-Attrition\",\"TableItemName\":\"DistanceFromHome (groups)\",\"ObjectType\":4},\"LinkType\":\"UsedInGroup\"}]"
               }
             ],
             "dataType": "int64",
@@ -466,6 +474,10 @@
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
+              },
+              {
+                "name": "__PBI_SemanticLinks",
+                "value": "[{\"LinkTarget\":{\"TableName\":\"HR-Employee-Attrition\",\"TableItemName\":\"WorkLifeBalance (groups)\",\"ObjectType\":4},\"LinkType\":\"UsedInGroup\"}]"
               }
             ],
             "dataType": "int64",
@@ -529,6 +541,268 @@
             "lineageTag": "7728a606-d002-4d29-8fa3-a4171783fff5",
             "sourceColumn": "YearsWithCurrManager",
             "summarizeBy": "sum"
+          },
+          {
+            "name": "Attrition Count",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "expression": "SWITCH(TRUE(),'HR-Employee-Attrition'[Attrition]=\"Yes\",1,'HR-Employee-Attrition'[Attrition]=\"No\",0,0)",
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "lineageTag": "a8be33ac-38b1-4e8d-beaf-b4326411402b",
+            "summarizeBy": "sum",
+            "type": "calculated"
+          },
+          {
+            "name": "AE",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "expression": "SUM('HR-Employee-Attrition'[EmployeeCount]) - SUM('HR-Employee-Attrition'[Attrition Count])",
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "lineageTag": "38c69156-bd00-4b89-9b9a-f1c42a050d89",
+            "summarizeBy": "sum",
+            "type": "calculated"
+          },
+          {
+            "name": "WorkLifeBalance (groups)",
+            "annotations": [
+              {
+                "name": "GroupingDesignState",
+                "value": "{\"Version\":0,\"Sources\":[{\"Name\":\"h\",\"Entity\":\"HR-Employee-Attrition\"}],\"GroupedColumns\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"WorkLifeBalance\"}}],\"GroupItems\":[{\"DisplayName\":\"(Blank)\",\"BlankDefaultPlaceholder\":true},{\"DisplayName\":\"Average\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"WorkLifeBalance\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"2L\"}}]]}}},{\"DisplayName\":\"Bad\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"WorkLifeBalance\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"1L\"}}]]}}},{\"DisplayName\":\"Excellent\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"WorkLifeBalance\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"4L\"}}]]}}},{\"DisplayName\":\"Good\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"WorkLifeBalance\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"3L\"}}]]}}},{\"DisplayName\":\"Other\"}]}"
+              },
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "expression": [
+              "SWITCH(",
+              "\tTRUE,",
+              "\tISBLANK('HR-Employee-Attrition'[WorkLifeBalance]),",
+              "\t\"(Blank)\",",
+              "\t'HR-Employee-Attrition'[WorkLifeBalance] IN {2},",
+              "\t\"Average\",",
+              "\t'HR-Employee-Attrition'[WorkLifeBalance] IN {1},",
+              "\t\"Bad\",",
+              "\t'HR-Employee-Attrition'[WorkLifeBalance] IN {4},",
+              "\t\"Excellent\",",
+              "\t'HR-Employee-Attrition'[WorkLifeBalance] IN {3},",
+              "\t\"Good\",",
+              "\t\"Other\"",
+              ")"
+            ],
+            "extendedProperties": [
+              {
+                "name": "GroupingMetadata",
+                "type": "json",
+                "value": {
+                  "groupedColumns": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "HR-Employee-Attrition"
+                          }
+                        },
+                        "Property": "WorkLifeBalance"
+                      }
+                    }
+                  ],
+                  "version": 0
+                }
+              }
+            ],
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "lineageTag": "d931451a-3ed6-4c51-8082-56afb8b9136a",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "DistanceFromHome (groups)",
+            "annotations": [
+              {
+                "name": "GroupingDesignState",
+                "value": "{\"Version\":0,\"Sources\":[{\"Name\":\"h\",\"Entity\":\"HR-Employee-Attrition\"}],\"GroupedColumns\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"DistanceFromHome\"}}],\"GroupItems\":[{\"DisplayName\":\"(Blank)\",\"BlankDefaultPlaceholder\":true},{\"DisplayName\":\"Far\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"DistanceFromHome\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"11L\"}}],[{\"Literal\":{\"Value\":\"12L\"}}],[{\"Literal\":{\"Value\":\"13L\"}}],[{\"Literal\":{\"Value\":\"14L\"}}],[{\"Literal\":{\"Value\":\"15L\"}}],[{\"Literal\":{\"Value\":\"16L\"}}],[{\"Literal\":{\"Value\":\"17L\"}}],[{\"Literal\":{\"Value\":\"18L\"}}],[{\"Literal\":{\"Value\":\"19L\"}}],[{\"Literal\":{\"Value\":\"20L\"}}]]}}},{\"DisplayName\":\"Near-by\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"DistanceFromHome\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"1L\"}}],[{\"Literal\":{\"Value\":\"2L\"}}],[{\"Literal\":{\"Value\":\"3L\"}}],[{\"Literal\":{\"Value\":\"4L\"}}],[{\"Literal\":{\"Value\":\"5L\"}}],[{\"Literal\":{\"Value\":\"6L\"}}],[{\"Literal\":{\"Value\":\"7L\"}}],[{\"Literal\":{\"Value\":\"8L\"}}],[{\"Literal\":{\"Value\":\"9L\"}}],[{\"Literal\":{\"Value\":\"10L\"}}]]}}},{\"DisplayName\":\"Very Far\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"DistanceFromHome\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"21L\"}}],[{\"Literal\":{\"Value\":\"22L\"}}],[{\"Literal\":{\"Value\":\"23L\"}}],[{\"Literal\":{\"Value\":\"24L\"}}],[{\"Literal\":{\"Value\":\"25L\"}}],[{\"Literal\":{\"Value\":\"26L\"}}],[{\"Literal\":{\"Value\":\"27L\"}}],[{\"Literal\":{\"Value\":\"28L\"}}],[{\"Literal\":{\"Value\":\"29L\"}}]]}}},{\"DisplayName\":\"Other\"}]}"
+              },
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "expression": [
+              "SWITCH(",
+              "\tTRUE,",
+              "\tISBLANK('HR-Employee-Attrition'[DistanceFromHome]),",
+              "\t\"(Blank)\",",
+              "\t'HR-Employee-Attrition'[DistanceFromHome] IN {11,",
+              "\t\t12,",
+              "\t\t13,",
+              "\t\t14,",
+              "\t\t15,",
+              "\t\t16,",
+              "\t\t17,",
+              "\t\t18,",
+              "\t\t19,",
+              "\t\t20},",
+              "\t\"Far\",",
+              "\t'HR-Employee-Attrition'[DistanceFromHome] IN {1,",
+              "\t\t2,",
+              "\t\t3,",
+              "\t\t4,",
+              "\t\t5,",
+              "\t\t6,",
+              "\t\t7,",
+              "\t\t8,",
+              "\t\t9,",
+              "\t\t10},",
+              "\t\"Near-by\",",
+              "\t'HR-Employee-Attrition'[DistanceFromHome] IN {21,",
+              "\t\t22,",
+              "\t\t23,",
+              "\t\t24,",
+              "\t\t25,",
+              "\t\t26,",
+              "\t\t27,",
+              "\t\t28,",
+              "\t\t29},",
+              "\t\"Very Far\",",
+              "\t\"Other\"",
+              ")"
+            ],
+            "extendedProperties": [
+              {
+                "name": "GroupingMetadata",
+                "type": "json",
+                "value": {
+                  "groupedColumns": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "HR-Employee-Attrition"
+                          }
+                        },
+                        "Property": "DistanceFromHome"
+                      }
+                    }
+                  ],
+                  "version": 0
+                }
+              }
+            ],
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "lineageTag": "0d985ecd-9520-4c90-bef7-de342b043fe9",
+            "summarizeBy": "none",
+            "type": "calculated"
+          },
+          {
+            "name": "Age (groups)",
+            "annotations": [
+              {
+                "name": "GroupingDesignState",
+                "value": "{\"Version\":0,\"Sources\":[{\"Name\":\"h\",\"Entity\":\"HR-Employee-Attrition\"}],\"GroupedColumns\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"Age\"}}],\"GroupItems\":[{\"DisplayName\":\"(Blank)\",\"BlankDefaultPlaceholder\":true},{\"DisplayName\":\"18-30\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"Age\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"18L\"}}],[{\"Literal\":{\"Value\":\"19L\"}}],[{\"Literal\":{\"Value\":\"20L\"}}],[{\"Literal\":{\"Value\":\"21L\"}}],[{\"Literal\":{\"Value\":\"22L\"}}],[{\"Literal\":{\"Value\":\"23L\"}}],[{\"Literal\":{\"Value\":\"24L\"}}],[{\"Literal\":{\"Value\":\"25L\"}}],[{\"Literal\":{\"Value\":\"26L\"}}],[{\"Literal\":{\"Value\":\"27L\"}}],[{\"Literal\":{\"Value\":\"28L\"}}],[{\"Literal\":{\"Value\":\"29L\"}}],[{\"Literal\":{\"Value\":\"30L\"}}]]}}},{\"DisplayName\":\"31-45\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"Age\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"31L\"}}],[{\"Literal\":{\"Value\":\"32L\"}}],[{\"Literal\":{\"Value\":\"33L\"}}],[{\"Literal\":{\"Value\":\"34L\"}}],[{\"Literal\":{\"Value\":\"35L\"}}],[{\"Literal\":{\"Value\":\"36L\"}}],[{\"Literal\":{\"Value\":\"37L\"}}],[{\"Literal\":{\"Value\":\"38L\"}}],[{\"Literal\":{\"Value\":\"39L\"}}],[{\"Literal\":{\"Value\":\"40L\"}}],[{\"Literal\":{\"Value\":\"41L\"}}],[{\"Literal\":{\"Value\":\"42L\"}}],[{\"Literal\":{\"Value\":\"43L\"}}],[{\"Literal\":{\"Value\":\"44L\"}}],[{\"Literal\":{\"Value\":\"45L\"}}]]}}},{\"DisplayName\":\"45-60\",\"Expression\":{\"In\":{\"Expressions\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Property\":\"Age\"}}],\"Values\":[[{\"Literal\":{\"Value\":\"46L\"}}],[{\"Literal\":{\"Value\":\"47L\"}}],[{\"Literal\":{\"Value\":\"48L\"}}],[{\"Literal\":{\"Value\":\"49L\"}}],[{\"Literal\":{\"Value\":\"50L\"}}],[{\"Literal\":{\"Value\":\"51L\"}}],[{\"Literal\":{\"Value\":\"52L\"}}],[{\"Literal\":{\"Value\":\"53L\"}}],[{\"Literal\":{\"Value\":\"54L\"}}],[{\"Literal\":{\"Value\":\"55L\"}}],[{\"Literal\":{\"Value\":\"56L\"}}],[{\"Literal\":{\"Value\":\"57L\"}}],[{\"Literal\":{\"Value\":\"58L\"}}],[{\"Literal\":{\"Value\":\"59L\"}}],[{\"Literal\":{\"Value\":\"60L\"}}]]}}},{\"DisplayName\":\"Other\"}]}"
+              },
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "expression": [
+              "SWITCH(",
+              "\tTRUE,",
+              "\tISBLANK('HR-Employee-Attrition'[Age]),",
+              "\t\"(Blank)\",",
+              "\t'HR-Employee-Attrition'[Age] IN {18,",
+              "\t\t19,",
+              "\t\t20,",
+              "\t\t21,",
+              "\t\t22,",
+              "\t\t23,",
+              "\t\t24,",
+              "\t\t25,",
+              "\t\t26,",
+              "\t\t27,",
+              "\t\t28,",
+              "\t\t29,",
+              "\t\t30},",
+              "\t\"18-30\",",
+              "\t'HR-Employee-Attrition'[Age] IN {31,",
+              "\t\t32,",
+              "\t\t33,",
+              "\t\t34,",
+              "\t\t35,",
+              "\t\t36,",
+              "\t\t37,",
+              "\t\t38,",
+              "\t\t39,",
+              "\t\t40,",
+              "\t\t41,",
+              "\t\t42,",
+              "\t\t43,",
+              "\t\t44,",
+              "\t\t45},",
+              "\t\"31-45\",",
+              "\t'HR-Employee-Attrition'[Age] IN {46,",
+              "\t\t47,",
+              "\t\t48,",
+              "\t\t49,",
+              "\t\t50,",
+              "\t\t51,",
+              "\t\t52,",
+              "\t\t53,",
+              "\t\t54,",
+              "\t\t55,",
+              "\t\t56,",
+              "\t\t57,",
+              "\t\t58,",
+              "\t\t59,",
+              "\t\t60},",
+              "\t\"45-60\",",
+              "\t\"Other\"",
+              ")"
+            ],
+            "extendedProperties": [
+              {
+                "name": "GroupingMetadata",
+                "type": "json",
+                "value": {
+                  "groupedColumns": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "HR-Employee-Attrition"
+                          }
+                        },
+                        "Property": "Age"
+                      }
+                    }
+                  ],
+                  "version": 0
+                }
+              }
+            ],
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "lineageTag": "33f44457-e23e-4b69-a86d-60a552691321",
+            "summarizeBy": "none",
+            "type": "calculated"
           }
         ],
         "lineageTag": "32dd7542-6ae3-4270-88cf-f74e450b414d",
